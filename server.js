@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import apiRouter from './server/api-router';
 
 var app = express();
 const PORT = process.env.PORT || 3001;
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
 });
 app.use(express.static('./dist/public'));
 app.use(bodyParser.json());
+app.use('/api', apiRouter);
 
 // routes
 app.get('/', (req, res) => {
