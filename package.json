@@ -1,0 +1,27 @@
+{
+  "name": "cocodevs",
+  "version": "1.0.0",
+  "description": "Cocodevs",
+  "main": "cjstart.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greendost/cocodevs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/greendost/cocodevs/issues"
+  },
+  "homepage": "https://github.com/greendost/cocodevs#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "pug": "^2.0.4",
+    "sqlite": "^3.0.3"
+  }
+}
