@@ -1,19 +1,59 @@
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listings: [],
-      title: '',
-      description: '',
-      url: '',
-      tags: []
+      form: {
+        title: '',
+        description: '',
+        url: '',
+        tags: []
+      }
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentDidMount () {
+    this.getCurrentListings();
+  }
+
+  getCurrentListings() {
+    var currentListings = [];
+    fetch('api/listings')
+    .then(res => res.json())
+    .then(data => 
+      {
+        currentListings = data.data;
+        this.setState({
+          listings: currentListings
+        })
+      })
+      .catch(err=> {
+        console.log(err)
+      });
+
+      console.log(this.state.listings)
+  }
+
+  saveNewListing() {
+    var postData = {data: this.state.form}
+    fetch('api/listings', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify(postData)
+     })
+       .then(res => res.json())
+       .then(data => {
+        currentListings = data;
+        this.setState({
+          listings: currentListings
+        })
+       })
+       .catch(err => {console.log(err)});
+   }
+  
 
   handleInputChange(event) {
     const target = event.target;
@@ -21,22 +61,27 @@ class App extends React.Component {
     const name = target.name;
 
     this.setState({
+      form: {
+      ...this.state.form,
       [name]: value
+      }
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    let newListing = {title: this.state.title, url: this.state.url, tags: this.state.tags};
+    let newListing = {title: this.state.form.title, description: this.state.form.description, url: this.state.form.url, tags: this.state.form.tags};
     const listings = [...this.state.listings, newListing]
     this.setState({
       listings,
-      title: '',
-      description: '',
-      url: '',
-      tags: ''
+      form: {
+        title: '',
+        description: '',
+        url: '',
+        tags: []
+      }
     });
-    
+    this.saveNewListing();
   }
 
   render() {
@@ -48,7 +93,7 @@ class App extends React.Component {
           <input
             name="title"
             type="text"
-            value={this.state.title}
+            value={this.state.form.title}
             onChange={this.handleInputChange} />
         </label>
         <br />
@@ -57,7 +102,7 @@ class App extends React.Component {
           <textarea
             name="description"
             type="longtext"
-            value={this.state.description}
+            value={this.state.form.description}
             onChange={this.handleInputChange} ></textarea>
         </label>
         <br />
@@ -66,7 +111,7 @@ class App extends React.Component {
           <input
             name="url"
             type="text"
-            value={this.state.url}
+            value={this.state.form.url}
             onChange={this.handleInputChange} />
         </label>
         <br/>
@@ -75,7 +120,7 @@ class App extends React.Component {
           <input
             name="tags"
             type="text"
-            value={this.state.tags}
+            value={this.state.form.tags}
             onChange={this.handleInputChange} />
         </label>
         <br/>
@@ -94,7 +139,5 @@ class App extends React.Component {
     );
   }
 }
-
-
 
 ReactDOM.render(<App />, document.querySelector('#root'));
