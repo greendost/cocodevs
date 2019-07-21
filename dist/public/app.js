@@ -7,7 +7,7 @@ class App extends React.Component {
         title: '',
         description: '',
         url: '',
-        tags: []
+        tags: ''
       }
     };
 
@@ -78,7 +78,7 @@ class App extends React.Component {
         title: '',
         description: '',
         url: '',
-        tags: []
+        tags: ''
       }
     });
     this.saveNewListing();
@@ -87,12 +87,20 @@ class App extends React.Component {
   render() {
     return (
       <main>
-      <form>
+        <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <a class="navbar-brand" href="#">CoCoDev</a>
+    </div>
+  </div>
+</nav>
+      <form class="form-group">
         <label>
           Title: 
           <input
             name="title"
             type="text"
+            class="form-control"
             value={this.state.form.title}
             onChange={this.handleInputChange} />
         </label>
@@ -102,6 +110,7 @@ class App extends React.Component {
           <textarea
             name="description"
             type="longtext"
+            class="form-control"
             value={this.state.form.description}
             onChange={this.handleInputChange} ></textarea>
         </label>
@@ -111,6 +120,7 @@ class App extends React.Component {
           <input
             name="url"
             type="text"
+            class="form-control"
             value={this.state.form.url}
             onChange={this.handleInputChange} />
         </label>
@@ -120,21 +130,26 @@ class App extends React.Component {
           <input
             name="tags"
             type="text"
+            class="form-control"
             value={this.state.form.tags}
             onChange={this.handleInputChange} />
         </label>
         <br/>
-        <button onClick={this.handleSubmit} >Submit</button>
+        <button class="btn" onClick={this.handleSubmit} >Submit</button>
       </form>
-      
+      <div>
           {this.state.listings.map(listing => (
-            <div>
-            <div><a href={listing.url}>{listing.title}</a></div>
-            <div>{listing.description}</div>
-            <div>{listing.tags}</div>
+            <div class="panel panel-default">
+            <div class="panel-heading" ><a href={listing.url}>{listing.title}</a>
+            <div class="text-muted small">{listing.timestamp?listing.timestamp:'new'}</div></div>
+            <div class="panel-body">{listing.description}
             </div>
-          )
-          )}
+            <div>
+            {listing.tags?listing.tags.split(',').map(tag => (<span class="badge">{tag}</span>)):null}
+            </div>
+            </div>
+          ))}
+          </div>
         </main>
     );
   }
