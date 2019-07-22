@@ -28,3 +28,7 @@ main {
   margin: 0 auto;
   height: 100vh;
 }
+
+.mt5 {
+  margin-top: 5px;
+}
